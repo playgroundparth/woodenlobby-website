@@ -70,15 +70,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             
             {/* Product title */}
             <div className="space-y-4">
-              <div className="flex items-start justify-between gap-4">
-                <h1 className="font-serif text-4xl md:text-5xl font-light text-foreground leading-tight">
+              <div className="flex items-start justify-between gap-2 sm:gap-4">
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-foreground leading-tight flex-1 min-w-0">
                   {product.product_name}
                 </h1>
-                <WhatsAppShareButton 
-                  productName={product.product_name} 
-                  slug={product.product_slug}
-                  priceDisplay={product.price_display}
-                />
+                <div className="flex-shrink-0">
+                  <WhatsAppShareButton 
+                    productName={product.product_name} 
+                    slug={product.product_slug}
+                    priceDisplay={product.price_display}
+                  />
+                </div>
               </div>
               
               {/* Pricing */}

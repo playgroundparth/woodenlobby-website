@@ -46,10 +46,10 @@ const ExpandableSection = ({ title, content, defaultExpanded = false }: Expandab
           <ReactMarkdown 
             remarkPlugins={[remarkGfm]}
             components={{
-              // Custom table components with professional styling
+              // Custom table components with mobile-responsive styling
               table: ({ children }) => (
-                <div className="mb-4 overflow-hidden">
-                  <table className="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden bg-white">
+                <div className="mb-4 overflow-x-auto">
+                  <table className="w-full min-w-0 border-collapse border border-gray-200 rounded-lg overflow-hidden bg-white">
                     {children}
                   </table>
                 </div>
@@ -70,12 +70,12 @@ const ExpandableSection = ({ title, content, defaultExpanded = false }: Expandab
                 </tr>
               ),
               th: ({ children }) => (
-                <th className="border-r border-gray-200 last:border-r-0 px-6 py-3 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider bg-gray-50">
+                <th className="border-r border-gray-200 last:border-r-0 px-3 md:px-6 py-3 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider bg-gray-50">
                   {children}
                 </th>
               ),
               td: ({ children }) => (
-                <td className="border-r border-gray-200 last:border-r-0 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
+                <td className="border-r border-gray-200 last:border-r-0 px-3 md:px-6 py-4 text-sm text-gray-700 break-words max-w-0">
                   {children}
                 </td>
               ),
@@ -195,18 +195,18 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
   return (
     <div className="space-y-6">
       {/* Top Benefits Badges */}
-      <div className="grid grid-cols-3 gap-2">
-        <div className="flex flex-col items-center gap-2 p-2 bg-orange-50 border border-orange-200 rounded-lg text-center">
+      <div className="grid grid-cols-3 gap-1 sm:gap-2">
+        <div className="flex flex-col items-center gap-1 sm:gap-2 p-2 bg-orange-50 border border-orange-200 rounded-lg text-center min-w-0">
           <Truck className="h-4 w-4 text-orange-600 flex-shrink-0" />
-          <p className="text-xs font-semibold text-gray-900">Free Delivery*</p>
+          <p className="text-xs font-semibold text-gray-900 leading-tight">Free Delivery*</p>
         </div>
-        <div className="flex flex-col items-center gap-2 p-2 bg-green-50 border border-green-200 rounded-lg text-center">
+        <div className="flex flex-col items-center gap-1 sm:gap-2 p-2 bg-green-50 border border-green-200 rounded-lg text-center min-w-0">
           <Shield className="h-4 w-4 text-green-600 flex-shrink-0" />
-          <p className="text-xs font-semibold text-gray-900">36 Month Warranty*</p>
+          <p className="text-xs font-semibold text-gray-900 leading-tight">36 Month Warranty*</p>
         </div>
-        <div className="flex flex-col items-center gap-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-center">
+        <div className="flex flex-col items-center gap-1 sm:gap-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-center min-w-0">
           <Lock className="h-4 w-4 text-blue-600 flex-shrink-0" />
-          <p className="text-xs font-semibold text-gray-900">Safe & Secure</p>
+          <p className="text-xs font-semibold text-gray-900 leading-tight">Safe & Secure</p>
         </div>
       </div>
 
@@ -220,10 +220,10 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  // Custom table components with professional styling (same as expandable sections)
+                  // Custom table components with mobile-responsive styling (same as expandable sections)
                   table: ({ children }) => (
-                    <div className="mb-4 overflow-hidden">
-                      <table className="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden bg-white">
+                    <div className="mb-4 overflow-x-auto">
+                      <table className="w-full min-w-0 border-collapse border border-gray-200 rounded-lg overflow-hidden bg-white">
                         {children}
                       </table>
                     </div>
@@ -244,12 +244,12 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
                     </tr>
                   ),
                   th: ({ children }) => (
-                    <th className="border-r border-gray-200 last:border-r-0 px-6 py-3 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider bg-gray-50">
+                    <th className="border-r border-gray-200 last:border-r-0 px-3 md:px-6 py-3 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider bg-gray-50">
                       {children}
                     </th>
                   ),
                   td: ({ children }) => (
-                    <td className="border-r border-gray-200 last:border-r-0 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="border-r border-gray-200 last:border-r-0 px-3 md:px-6 py-4 text-sm text-gray-700 break-words max-w-0">
                       {children}
                     </td>
                   ),
