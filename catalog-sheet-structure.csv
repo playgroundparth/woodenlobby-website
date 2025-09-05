@@ -1,0 +1,18 @@
+category,product_name,price_display,mrp_optional,badge,short_desc,images,product_slug,status,overview_content,specifications_content
+Beds,Aurora Platform Bed (King),₹42000,₹48000,New,"Solid sheesham wood, matte walnut, 78x72in","https://example.com/bed1.jpg,https://example.com/bed1b.jpg",aurora-platform-bed-king,Active,"Product overview in **markdown** format - supports headers, lists, bold, italic, etc.","Specifications in **markdown** format - can include tables, images, and rich formatting"
+Beds,Sample Product 2,₹25000,,,"Short description here","https://example.com/image.jpg",sample-product-2,Active,"## Product Overview
+
+This section supports full markdown including:
+- **Bold text**
+- *Italic text* 
+- Lists and bullet points
+- Links and more formatting","## Specifications
+
+| **Feature** | **Details** |
+|-------------|-------------|
+| Material | Wood Type |
+| Dimensions | Size info |
+| Weight | Product weight |
+
+Can also include images:
+![Product diagram](image-url-here)"
