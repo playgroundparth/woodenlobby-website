@@ -32,12 +32,64 @@ function toNumber(price: string | undefined | null): number | null {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  // During build time, fetch directly from sheets instead of API route
-  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL) {
-    // Build time - use sheet data directly
-    const { getFullProductsFromSheet } = await import('./catalog-server')
-    const products = await getFullProductsFromSheet()
-    return products.map(parsePriceNumber)
+  // During build time (static generation), fetch directly from sheets instead of API route
+  // Vercel sets CI=true during build, and we're in a server context during SSG
+  const isBuildTime = typeof window === 'undefined' && (
+    process.env.CI === 'true' || 
+    process.env.VERCEL === '1' || 
+    process.env.NODE_ENV === 'production'
+  )
+  
+  if (isBuildTime) {
+    // Build time - fetch directly from Google Sheets or use local fallback
+    try {
+      const { getFullProductsFromSheet } = await import('./catalog-server')
+      const products = await getFullProductsFromSheet()
+      if (products.length > 0) {
+        return products.map(parsePriceNumber)
+      }
+    } catch (error) {
+      console.warn('Failed to fetch from Google Sheets during build, using local fallback:', error)
+    }
+    
+    // Fallback to local CSV during build
+    try {
+      const fs = await import('fs')
+      const path = await import('path')
+      const Papa = await import('papaparse')
+      const { slugify } = await import('./slug')
+      
+      const csvPath = path.join(process.cwd(), 'woodenstreet-catalog-data.csv')
+      const csvContent = fs.readFileSync(csvPath, 'utf-8')
+      
+      const parsed = Papa.parse(csvContent, {
+        header: true,
+        skipEmptyLines: true,
+        transformHeader: (h: string) => h.trim(),
+      })
+      
+      const products = parsed.data.map((row: any) => {
+        const images = [row.image1, row.image2, row.image3].filter(Boolean)
+        return {
+          category: (row.category || '').trim(),
+          product_name: (row.name || row.product_name || '').trim(),
+          price_display: (row.price_display || row.price || '').trim(),
+          mrp_optional: (row.mrp_optional || '').trim() || undefined,
+          badge: (row.badge || '').trim() || undefined,
+          short_desc: (row.short_description || row.short_desc || '').trim() || undefined,
+          images,
+          product_slug: (row.product_slug || '').trim() || slugify(row.name || row.product_name || ''),
+          status: (row.status || '').trim() === 'Active' ? 'Active' as const : 'Hidden' as const,
+          specifications_content: (row.specifications_content || '').trim() || undefined,
+          overview_content: (row.overview_content || '').trim() || undefined,
+        }
+      }).filter((p: any) => p.status === 'Active')
+      
+      return products.map(parsePriceNumber)
+    } catch (error) {
+      console.error('Failed to load local CSV fallback:', error)
+      return []
+    }
   }
   
   // Runtime - use API route
